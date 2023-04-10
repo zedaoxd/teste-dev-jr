@@ -1,3 +1,9 @@
+import { Container } from "./styles";
+
 export const FromContainer = () => {
-  return <div>FromContainer</div>;
+  return (
+    <Container>
+      <h1>FromContainer</h1>
+    </Container>
+  );
 };
