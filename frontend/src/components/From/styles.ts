@@ -6,5 +6,5 @@ export const Container = styled.div`
   width: 50em;
   padding: 1em;
   border-radius: 0.3em;
-  background: #fff;
+  background: #f0f0f5;
 `;
