@@ -1,7 +1,10 @@
 import { Container, Table } from "./styles";
 import Swal from "sweetalert2";
-import { useQuery } from "@tanstack/react-query";
-import { getAllUsuarios } from "../../../services/usuarioService";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  deleteUsuario,
+  getAllUsuarios,
+} from "../../../services/usuarioService";
 import { CircularProgress } from "@mui/material";
 import { Row } from "./Row";
 
@@ -15,17 +18,25 @@ export const TableUsers = () => {
       denyButtonText: `Não`,
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Usuário excluído com sucesso!", "", "success");
-      } else if (result.isDenied) {
-        Swal.fire("Usuário não foi excluído", "", "info");
+        deleteUsuarioMutation(id);
       }
     });
   };
 
-  const { data, isLoading, error } = useQuery(["users"], getAllUsuarios);
+  const queryClient = useQueryClient();
+
+  const { mutate: deleteUsuarioMutation } = useMutation(deleteUsuario, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["users"]);
+      Swal.fire("Usuário excluído com sucesso!", "", "success");
+    },
+  });
+
+  const { data, isLoading } = useQuery(["users"], getAllUsuarios);
 
   return (
     <Container>
+      {isLoading && <CircularProgress />}
       <Table>
         <thead>
           <tr>
@@ -38,8 +49,6 @@ export const TableUsers = () => {
           </tr>
         </thead>
         <tbody>
-          {isLoading && <div>Carregando...</div>}
-
           {data &&
             data.content.map((usuario) => (
               <Row
