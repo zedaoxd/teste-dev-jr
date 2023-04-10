@@ -1,6 +1,7 @@
 package br.com.bruno.dtos;
 
 import br.com.bruno.entities.Empresa;
+import br.com.bruno.entities.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -18,4 +19,8 @@ public class UsuarioDTO implements Serializable {
     private Instant dataNascimento;
     private String cidadeNascimento;
     private List<Empresa> empresas;
+
+    public Usuario toEntity() {
+        return new Usuario(id, nome, email, telefone, dataNascimento, cidadeNascimento, empresas);
+    }
 }

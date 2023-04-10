@@ -1,5 +1,6 @@
 package br.com.bruno.entities;
 
+import br.com.bruno.dtos.EmpresaDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -30,4 +31,8 @@ public class Empresa implements Serializable {
             joinColumns = @JoinColumn(name = "empresa_id"),
             inverseJoinColumns = @JoinColumn(name = "usuario_id"))
     private List<Usuario> usuarios;
+
+    public EmpresaDTO toDTO() {
+        return new EmpresaDTO(id, nome, cnpj, usuarios);
+    }
 }

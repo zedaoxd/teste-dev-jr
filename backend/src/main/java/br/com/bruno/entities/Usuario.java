@@ -1,5 +1,6 @@
 package br.com.bruno.entities;
 
+import br.com.bruno.dtos.UsuarioDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -37,4 +38,8 @@ public class Usuario implements Serializable {
 
     @ManyToMany(mappedBy = "usuarios")
     private List<Empresa> empresas;
+
+    public UsuarioDTO toDTO() {
+        return new UsuarioDTO(id, nome, email, telefone, dataNascimento, cidadeNascimento, empresas);
+    }
 }
