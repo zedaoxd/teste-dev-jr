@@ -35,4 +35,10 @@ public class EmpresaController {
         URI uri = URI.create("/empresas/" + dto.getId());
         return ResponseEntity.created(uri).body(dto);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<EmpresaDTO> update(@PathVariable Long id, @RequestBody EmpresaDTO dto) {
+        dto = empresaService.update(dto, id);
+        return ResponseEntity.ok(dto);
+    }
 }
