@@ -1,8 +1,24 @@
 import { Container, Table } from "./styles";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Swal from "sweetalert2";
 
 export const TableUsers = () => {
+  const handleClickDelete = (id: number) => {
+    Swal.fire({
+      title: "Tem certeza que deseja excluir esse usuário?",
+      icon: "warning",
+      showDenyButton: true,
+      confirmButtonText: `Sim`,
+      denyButtonText: `Não`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Usuário excluído com sucesso!", "", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Usuário não foi excluído", "", "info");
+      }
+    });
+  };
   return (
     <Container>
       <Table>
@@ -27,7 +43,7 @@ export const TableUsers = () => {
               <button>
                 <EditIcon />
               </button>
-              <button>
+              <button onClick={() => handleClickDelete(1)}>
                 <DeleteIcon />
               </button>
             </td>
