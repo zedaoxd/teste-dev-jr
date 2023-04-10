@@ -6,14 +6,13 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.List;
 
-@Entity(name = "usuarios")
+@Entity(name = "empresas")
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Usuario implements Serializable {
+public class Empresa implements Serializable {
 
     @Id
     @EqualsAndHashCode.Include
@@ -23,18 +22,12 @@ public class Usuario implements Serializable {
     @Column(nullable = false, length = 100)
     private String nome;
 
-    @Column(nullable = false, length = 100)
-    private String email;
+    @Column(nullable = false, length = 15)
+    private String cnpj;
 
-    @Column(length = 20)
-    private String telefone;
-
-    @Temporal(TemporalType.DATE)
-    private Instant dataNascimento;
-
-    @Column(length = 100)
-    private String cidadeNascimento;
-
-    @ManyToMany(mappedBy = "usuarios")
-    private List<Empresa> empresas;
+    @ManyToMany
+    @JoinTable(name = "empresas_usuarios",
+            joinColumns = @JoinColumn(name = "empresa_id"),
+            inverseJoinColumns = @JoinColumn(name = "usuario_id"))
+    private List<Usuario> usuarios;
 }
