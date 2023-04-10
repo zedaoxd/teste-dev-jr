@@ -6,9 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity(name = "usuarios")
@@ -33,15 +35,25 @@ public class Usuario implements Serializable {
     private String telefone;
 
     @Temporal(TemporalType.DATE)
-    private Instant dataNascimento;
+    @Column(name = "data_nascimento")
+    private Date dataNascimento;
 
     @Column(length = 100)
     private String cidadeNascimento;
 
     @ManyToMany(mappedBy = "usuarios")
-    private List<Empresa> empresas;
+    private List<Empresa> empresas = new ArrayList<>();
 
     public UsuarioDTO toDTO() {
-        return new UsuarioDTO(id, nome, email, telefone, dataNascimento, cidadeNascimento, empresas);
+        var usuarioDTO = new UsuarioDTO();
+        BeanUtils.copyProperties(this, usuarioDTO, "empresas");
+        return usuarioDTO;
+    }
+
+    public UsuarioDTO toDTO(List<Empresa> empresas) {
+        var usuarioDTO = new UsuarioDTO();
+        BeanUtils.copyProperties(this, usuarioDTO);
+        usuarioDTO.setEmpresas(empresas);
+        return usuarioDTO;
     }
 }

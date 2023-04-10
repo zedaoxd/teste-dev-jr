@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -16,7 +17,7 @@ public class EmpresaDTO implements Serializable {
     private Long id;
     private String nome;
     private String cnpj;
-    private List<Usuario> usuarios;
+    private List<Usuario> usuarios = new ArrayList<>();
 
     public Empresa toEntity() {
         return new Empresa(id, nome, cnpj, usuarios);

@@ -30,7 +30,7 @@ public class UsuarioService {
         log.info("Buscando usuario com id: {}", id);
         Usuario entity = usuarioRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado id: " + id));
-        return entity.toDTO();
+        return entity.toDTO(entity.getEmpresas());
     }
 
     @Transactional

@@ -7,7 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -18,9 +19,9 @@ public class UsuarioDTO implements Serializable {
     private String nome;
     private String email;
     private String telefone;
-    private Instant dataNascimento;
+    private Date dataNascimento;
     private String cidadeNascimento;
-    private List<Empresa> empresas;
+    private List<Empresa> empresas = new ArrayList<>();
 
     public Usuario toEntity() {
         return new Usuario(id, nome, email, telefone, dataNascimento, cidadeNascimento, empresas);

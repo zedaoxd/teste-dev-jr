@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "empresas")
@@ -32,7 +33,7 @@ public class Empresa implements Serializable {
     @JoinTable(name = "empresas_usuarios",
             joinColumns = @JoinColumn(name = "empresa_id"),
             inverseJoinColumns = @JoinColumn(name = "usuario_id"))
-    private List<Usuario> usuarios;
+    private List<Usuario> usuarios = new ArrayList<>();
 
     public EmpresaDTO toDTO() {
         return new EmpresaDTO(id, nome, cnpj, usuarios);
