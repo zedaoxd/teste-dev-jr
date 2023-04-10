@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+
 @RestController
 @RequestMapping("/usuarios")
 @RequiredArgsConstructor
@@ -29,7 +31,14 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<UsuarioDTO> save(@RequestBody UsuarioDTO dto) {
-        return ResponseEntity.ok(usuarioService.save(dto));
+        dto = usuarioService.save(dto);
+        URI uri = URI.create("/usuarios/" + dto.getId());
+        return ResponseEntity.created(uri).body(dto);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UsuarioDTO> update(@RequestBody UsuarioDTO dto, @PathVariable Long id) {
+        return ResponseEntity.ok(usuarioService.update(dto, id));
     }
 
 }
