@@ -24,6 +24,13 @@ public class UsuarioService {
         return usuarioRepository.findAll(pageable).map(Usuario::toDTO);
     }
 
+    @Transactional(readOnly = true)
+    public UsuarioDTO findById(Long id) {
+        log.info("Buscando usuario com id: {}", id);
+        Usuario entity = usuarioRepository.findById(id).orElseThrow();
+        return entity.toDTO();
+    }
+
     @Transactional
     public UsuarioDTO save(UsuarioDTO dto) {
         log.info("Salvando usuario: {}", dto);

@@ -24,5 +24,5 @@ public class UsuarioController {
     public ResponseEntity<Page<UsuarioDTO>> findAll(Pageable pageable) {
         return ResponseEntity.ok(usuarioService.findAll(pageable));
     }
-    
+
 }
