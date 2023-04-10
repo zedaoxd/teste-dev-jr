@@ -1,5 +1,10 @@
-import { FromContainer } from "../../components/FromContainer";
+import { From } from "../../components/From";
+import { Container } from "./styles";
 
 export const Home = () => {
-  return <FromContainer />;
+  return (
+    <Container>
+      <From />
+    </Container>
+  );
 };
