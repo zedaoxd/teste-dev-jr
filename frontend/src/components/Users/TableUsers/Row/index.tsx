@@ -1,6 +1,7 @@
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Usuario } from "../../../../@types";
+import formataNumeroTelefone from "../../../../utils/formaNumeroTelefone";
 
 type Props = {
   handleClickDelete: (id: number) => void;
@@ -17,7 +18,7 @@ export const Row = ({
     <tr>
       <td>{usuario.nome}</td>
       <td>{usuario.email}</td>
-      <td>{usuario.telefone}</td>
+      <td>{formataNumeroTelefone(usuario.telefone)}</td>
       <td>{new Date(usuario.dataNascimento).toLocaleDateString()}</td>
       <td>{usuario.cidadeNascimento}</td>
       <td>
