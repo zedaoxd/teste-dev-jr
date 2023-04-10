@@ -85,5 +85,11 @@ export const ContainerButtonsFrom = styled.div`
       margin: 0;
       font-size: 1.2rem;
     }
+
+    &:disabled {
+      background: #ccc;
+      color: #000;
+      cursor: not-allowed;
+    }
   }
 `;

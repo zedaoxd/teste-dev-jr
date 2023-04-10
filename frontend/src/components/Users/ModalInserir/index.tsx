@@ -9,6 +9,9 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import SaveIcon from "@mui/icons-material/Save";
 import CleaningServicesIcon from "@mui/icons-material/CleaningServices";
+import * as z from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const style = {
   position: "absolute" as "absolute",
@@ -21,12 +24,42 @@ const style = {
   boxShadow: 24,
 };
 
+const schema = z.object({
+  nome: z.string().min(3).max(50),
+  email: z.string().email(),
+  telefone: z.string().optional(),
+  dataNascimento: z.string().optional(),
+  cidadeNascimento: z.string().optional(),
+});
+
+type FormValues = z.infer<typeof schema>;
+
 type Props = {
   open: boolean;
   handleClose: () => void;
 };
 
 export const ModalInserir = ({ handleClose, open }: Props) => {
+  const {
+    handleSubmit,
+    register,
+    formState: { isValid, errors },
+    reset,
+  } = useForm<FormValues>({
+    mode: "all",
+    reValidateMode: "onChange",
+    resolver: zodResolver(schema),
+  });
+
+  const onSubmit = handleSubmit((data) => {
+    try {
+      schema.parse(data);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
   return (
     <Modal
       open={open}
@@ -41,39 +74,61 @@ export const ModalInserir = ({ handleClose, open }: Props) => {
             <CloseIcon />
           </button>
         </Header>
-        <From>
+        <From onSubmit={onSubmit}>
           <div>
             <label htmlFor="nome">Nome: *</label>
-            <input type="text" name="nome" id="nome" />
+            <input {...register("nome")} type="text" name="nome" id="nome" />
           </div>
 
           <div>
             <label htmlFor="email">E-mail: *</label>
-            <input type="email" name="email" id="email" />
+            <input
+              {...register("email")}
+              type="email"
+              name="email"
+              id="email"
+            />
           </div>
 
           <ContainerTelefoneData>
             <div>
               <label htmlFor="telefone">Telefone:</label>
-              <input type="tel" name="telefone" id="telefone" />
+              <input
+                {...register("telefone")}
+                type="tel"
+                name="telefone"
+                max={11}
+                min={10}
+                id="telefone"
+              />
             </div>
             <div>
               <label htmlFor="dataNascimento">Data de nascimento:</label>
-              <input type="date" name="dataNascimento" id="dataNascimento" />
+              <input
+                {...register("dataNascimento")}
+                type="date"
+                name="dataNascimento"
+                id="dataNascimento"
+              />
             </div>
           </ContainerTelefoneData>
 
           <div>
             <label htmlFor="cidadeNascimento">Cidade onde nasceu:</label>
-            <input type="text" name="cidadeNascimento" id="cidadeNascimento" />
+            <input
+              {...register("cidadeNascimento")}
+              type="text"
+              name="cidadeNascimento"
+              id="cidadeNascimento"
+            />
           </div>
 
           <ContainerButtonsFrom>
-            <button type="reset">
+            <button type="reset" onClick={() => reset()}>
               <CleaningServicesIcon />
               <span>Limpar</span>
             </button>
-            <button type="submit">
+            <button type="submit" disabled={!isValid}>
               <SaveIcon />
               <span>Salvar</span>
             </button>
