@@ -3,6 +3,7 @@ package br.com.bruno.entities;
 import br.com.bruno.dtos.UsuarioDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @Entity(name = "usuarios")
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Usuario implements Serializable {
 

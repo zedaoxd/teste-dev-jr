@@ -3,6 +3,7 @@ package br.com.bruno.entities;
 import br.com.bruno.dtos.EmpresaDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity(name = "empresas")
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Empresa implements Serializable {
 
