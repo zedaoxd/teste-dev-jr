@@ -41,4 +41,10 @@ public class EmpresaController {
         dto = empresaService.update(dto, id);
         return ResponseEntity.ok(dto);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        empresaService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -51,6 +51,8 @@ public class EmpresaService {
 
     public void delete(Long id) {
         log.info("Deletando empresa com id: {}", id);
-        empresaRepository.deleteById(id);
+        var entity = empresaRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Empresa não encontrada: " + id));
+        empresaRepository.delete(entity);
     }
 }
