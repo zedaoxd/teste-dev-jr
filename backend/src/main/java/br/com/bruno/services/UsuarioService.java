@@ -7,6 +7,7 @@ import br.com.bruno.services.exceptions.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -51,6 +52,8 @@ public class UsuarioService {
 
     public void delete(Long id) {
         log.info("Deletando usuario com id: {}", id);
-        usuarioRepository.deleteById(id);
+        var entity = usuarioRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado id: " + id));
+        usuarioRepository.delete(entity);
     }
 }
