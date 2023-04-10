@@ -2,10 +2,10 @@ import Empresa from "./empresa";
 
 export type Usuario = {
   id: number;
-  name: string;
+  nome: string;
   email: string;
   telefone: string;
-  dataNascimento: Date;
+  dataNascimento: number;
   cidadeNascimento: string;
   empresas: Empresa[];
 };
