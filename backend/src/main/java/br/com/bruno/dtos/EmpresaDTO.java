@@ -5,6 +5,7 @@ import br.com.bruno.entities.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,6 +21,15 @@ public class EmpresaDTO implements Serializable {
     private List<Usuario> usuarios = new ArrayList<>();
 
     public Empresa toEntity() {
-        return new Empresa(id, nome, cnpj, usuarios);
+        var empresa = new Empresa();
+        BeanUtils.copyProperties(this, empresa, "usuarios");
+        return empresa;
+    }
+
+    public Empresa toEntity(List<Usuario> usuarios) {
+        var empresa = new Empresa();
+        BeanUtils.copyProperties(this, empresa);
+        empresa.setUsuarios(usuarios);
+        return empresa;
     }
 }

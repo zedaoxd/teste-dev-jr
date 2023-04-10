@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -36,6 +37,15 @@ public class Empresa implements Serializable {
     private List<Usuario> usuarios = new ArrayList<>();
 
     public EmpresaDTO toDTO() {
-        return new EmpresaDTO(id, nome, cnpj, usuarios);
+        var empresaDTO = new EmpresaDTO();
+        BeanUtils.copyProperties(this, empresaDTO, "usuarios");
+        return empresaDTO;
+    }
+
+    public EmpresaDTO toDTO(List<Usuario> usuarios) {
+        var empresaDTO = new EmpresaDTO();
+        BeanUtils.copyProperties(this, empresaDTO);
+        empresaDTO.setUsuarios(usuarios);
+        return empresaDTO;
     }
 }
