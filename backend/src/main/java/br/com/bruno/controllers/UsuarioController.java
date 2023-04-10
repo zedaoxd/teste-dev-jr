@@ -25,4 +25,9 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.findAll(pageable));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<UsuarioDTO> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(usuarioService.findById(id));
+    }
+
 }

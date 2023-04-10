@@ -3,6 +3,7 @@ package br.com.bruno.services;
 import br.com.bruno.dtos.UsuarioDTO;
 import br.com.bruno.entities.Usuario;
 import br.com.bruno.repositories.UsuarioRepository;
+import br.com.bruno.services.exceptions.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -27,7 +28,8 @@ public class UsuarioService {
     @Transactional(readOnly = true)
     public UsuarioDTO findById(Long id) {
         log.info("Buscando usuario com id: {}", id);
-        Usuario entity = usuarioRepository.findById(id).orElseThrow();
+        Usuario entity = usuarioRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado id: " + id));
         return entity.toDTO();
     }
 
