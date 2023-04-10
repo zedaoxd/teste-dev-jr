@@ -3,9 +3,9 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50em;
+  min-width: 900px;
+  width: 90%;
   padding: 2em 1em 1em 1em;
-  border-radius: 0.3em;
   background: #f0f0f5;
 
   & > figure {
