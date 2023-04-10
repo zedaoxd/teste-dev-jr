@@ -1,13 +1,17 @@
 import AddIcon from "@mui/icons-material/Add";
 import { Container, Button, Input, Select } from "./styles";
+import { useState } from "react";
+import { ModalInserir } from "../ModalInserir";
 
 export const Search = () => {
+  const [openModalInserir, setOpenModalInserir] = useState(false);
+  const handleCloseModalInserir = () => setOpenModalInserir(false);
+
   return (
     <Container>
-      <Button>
+      <Button onClick={() => setOpenModalInserir(true)}>
         <AddIcon />
       </Button>
-
       <div>
         <Input type="text" placeholder="Buscar..." />
         <Select>
@@ -18,6 +22,10 @@ export const Search = () => {
           <option value="dateNascimento">Data</option>
         </Select>
       </div>
+      <ModalInserir
+        open={openModalInserir}
+        handleClose={handleCloseModalInserir}
+      />
     </Container>
   );
 };
