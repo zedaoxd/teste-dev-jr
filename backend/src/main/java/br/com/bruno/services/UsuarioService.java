@@ -7,7 +7,6 @@ import br.com.bruno.services.exceptions.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -37,7 +36,10 @@ public class UsuarioService {
     @Transactional
     public UsuarioDTO save(UsuarioDTO dto) {
         log.info("Salvando usuario: {}", dto);
-        Usuario usuario = usuarioRepository.save(dto.toEntity());
+        Usuario usuario = dto.toEntity();
+        usuario.getEmpresas().clear();
+        usuario.getEmpresas().addAll(dto.getEmpresas());
+        usuario = usuarioRepository.save(usuario);
         return usuario.toDTO();
     }
 

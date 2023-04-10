@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "empresas")
@@ -30,22 +29,9 @@ public class Empresa implements Serializable {
     @Column(nullable = false, length = 15)
     private String cnpj;
 
-    @ManyToMany
-    @JoinTable(name = "empresas_usuarios",
-            joinColumns = @JoinColumn(name = "empresa_id"),
-            inverseJoinColumns = @JoinColumn(name = "usuario_id"))
-    private List<Usuario> usuarios = new ArrayList<>();
-
     public EmpresaDTO toDTO() {
         var empresaDTO = new EmpresaDTO();
         BeanUtils.copyProperties(this, empresaDTO, "usuarios");
-        return empresaDTO;
-    }
-
-    public EmpresaDTO toDTO(List<Usuario> usuarios) {
-        var empresaDTO = new EmpresaDTO();
-        BeanUtils.copyProperties(this, empresaDTO);
-        empresaDTO.setUsuarios(usuarios);
         return empresaDTO;
     }
 }

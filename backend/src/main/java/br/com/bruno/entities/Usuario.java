@@ -41,7 +41,10 @@ public class Usuario implements Serializable {
     @Column(length = 100)
     private String cidadeNascimento;
 
-    @ManyToMany(mappedBy = "usuarios")
+    @ManyToMany()
+    @JoinTable(name = "usuarios_empresas",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "empresa_id"))
     private List<Empresa> empresas = new ArrayList<>();
 
     public UsuarioDTO toDTO() {
