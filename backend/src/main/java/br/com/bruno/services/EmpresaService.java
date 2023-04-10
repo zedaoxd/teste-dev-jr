@@ -3,6 +3,7 @@ package br.com.bruno.services;
 import br.com.bruno.dtos.EmpresaDTO;
 import br.com.bruno.entities.Empresa;
 import br.com.bruno.repositories.EmpresaRepository;
+import br.com.bruno.services.exceptions.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -22,6 +23,14 @@ public class EmpresaService {
     public Page<EmpresaDTO> findAll(Pageable pageable) {
         log.info("Buscando todas as empresas");
         return empresaRepository.findAll(pageable).map(Empresa::toDTO);
+    }
+
+    @Transactional(readOnly = true)
+    public EmpresaDTO findById(Long id) {
+        log.info("Buscando empresa com id: {}", id);
+        Empresa entity = empresaRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Empresa não encontrada: " + id));
+        return entity.toDTO();
     }
 
     @Transactional
