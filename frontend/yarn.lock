@@ -596,6 +596,19 @@
   resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.5.0.tgz#57618e57942a5f0131374a9fdb0167e25a117fdc"
   integrity sha512-bkUDCp8o1MvFO+qxkODcbhSqRa6P2GXgrGZVpt0dCXNW2HCSCqYI0ZoAqEOSAjRWmmlKcYgFvN4B4S+zo/f8kg==
 
+"@tanstack/query-core@4.29.1":
+  version "4.29.1"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-4.29.1.tgz#62a4bc120b85e6bb3c6c0aca96346e643e232248"
+  integrity sha512-vkPewLEG8ua0efo3SsVT0BcBtkq5RZX8oPhDAyKL+k/rdOYSQTEocfGEXSaBwIwsXeOGBUpfKqI+UmHvNqdWXg==
+
+"@tanstack/react-query@^4.29.1":
+  version "4.29.1"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-4.29.1.tgz#5f166aca63915c52f6eda930a54d6933bfd11d1b"
+  integrity sha512-/crv1v+OeuGG6EOvaQmyeo9GCKtH4jbmuhZkvk9ulufRiHcTr/A9+YP9GevEAZzUTdzXMwenpTbyxBGvG2xXvw==
+  dependencies:
+    "@tanstack/query-core" "4.29.1"
+    use-sync-external-store "^1.2.0"
+
 "@types/hoist-non-react-statics@*":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz#1124aafe5118cb591977aeb1ceaaed1070eb039f"
@@ -1277,6 +1290,11 @@ update-browserslist-db@^1.0.10:
   dependencies:
     escalade "^3.1.1"
     picocolors "^1.0.0"
+
+use-sync-external-store@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz#7dbefd6ef3fe4e767a0cf5d7287aacfb5846928a"
+  integrity sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==
 
 vite@^4.2.0:
   version "4.2.1"

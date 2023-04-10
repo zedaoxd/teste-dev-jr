@@ -1,10 +1,10 @@
-import { From } from "../../components/Users";
+import { Form } from "../../components/Users";
 import { Container } from "./styles";
 
 export const Home = () => {
   return (
     <Container>
-      <From />
+      <Form />
     </Container>
   );
 };

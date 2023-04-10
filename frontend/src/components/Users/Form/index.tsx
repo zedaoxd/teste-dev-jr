@@ -2,7 +2,7 @@ import { Search } from "../Search";
 import { TableUsers } from "../TableUsers";
 import { Container } from "./styles";
 
-export const From = () => {
+export const Form = () => {
   return (
     <Container>
       <figure>
