@@ -2,6 +2,12 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100%;
+
+  h3 {
+    font-size: 1rem;
+    color: red;
+    margin-top: 20px;
+  }
 `;
 
 export const Table = styled.table`

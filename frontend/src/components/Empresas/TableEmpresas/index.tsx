@@ -29,29 +29,28 @@ export const TableEmpresas = () => {
 
   const queryClient = useQueryClient();
 
-  const { mutate: deleteEmpresaMutation, mutateAsync } = useMutation(
-    deleteEmpresa,
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["empresas"]);
-        Swal.fire("Empresa excluída com sucesso!", "", "success");
-      },
-      onError: (e: any) => {
-        if (e.response.status === 400) {
-          Swal.fire(
-            "Erro 400",
-            "Para deletar essa empresa primeiro delete os funcionarios que fazem parte dela",
-            "error"
-          );
-        }
-      },
-    }
-  );
+  const { mutateAsync } = useMutation(deleteEmpresa, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["empresas"]);
+      Swal.fire("Empresa excluída com sucesso!", "", "success");
+    },
+    onError: (e: any) => {
+      if (e.response.status === 400) {
+        Swal.fire(
+          "Erro 400",
+          "Para deletar essa empresa primeiro delete os funcionarios que fazem parte dela",
+          "error"
+        );
+      }
+    },
+  });
 
   return (
     <Container>
       {isLoading && <CircularProgress />}
-      {data && (
+      {data && data.content.length === 0 ? (
+        <h3>Nenhuma empresa cadastrada</h3>
+      ) : (
         <Table>
           <thead>
             <tr>
@@ -61,14 +60,15 @@ export const TableEmpresas = () => {
             </tr>
           </thead>
           <tbody>
-            {data.content.map((empresa) => (
-              <Row
-                key={empresa.id}
-                empresa={empresa}
-                handleClickDelete={handleClickDelete}
-                handleClickUpdate={() => {}}
-              />
-            ))}
+            {data &&
+              data.content.map((empresa) => (
+                <Row
+                  key={empresa.id}
+                  empresa={empresa}
+                  handleClickDelete={handleClickDelete}
+                  handleClickUpdate={() => {}}
+                />
+              ))}
           </tbody>
         </Table>
       )}

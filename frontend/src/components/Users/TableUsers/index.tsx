@@ -37,29 +37,33 @@ export const TableUsers = () => {
   return (
     <Container>
       {isLoading && <CircularProgress />}
-      <Table>
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>E-mail</th>
-            <th>Telefone</th>
-            <th>Nascimento</th>
-            <th>Cidade</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {data &&
-            data.content.map((usuario) => (
-              <Row
-                key={usuario.id}
-                usuario={usuario}
-                handleClickDelete={handleClickDelete}
-                handleClickUpdate={() => {}}
-              />
-            ))}
-        </tbody>
-      </Table>
+      {data && data.content.length === 0 ? (
+        <h3>Nenhum usuário cadastrado</h3>
+      ) : (
+        <Table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>E-mail</th>
+              <th>Telefone</th>
+              <th>Nascimento</th>
+              <th>Cidade</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {data &&
+              data.content.map((usuario) => (
+                <Row
+                  key={usuario.id}
+                  usuario={usuario}
+                  handleClickDelete={handleClickDelete}
+                  handleClickUpdate={() => {}}
+                />
+              ))}
+          </tbody>
+        </Table>
+      )}
     </Container>
   );
 };
