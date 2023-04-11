@@ -19,7 +19,11 @@ export const Row = ({
       <td>{usuario.nome}</td>
       <td>{usuario.email}</td>
       <td>{formataNumeroTelefone(usuario.telefone)}</td>
-      <td>{new Date(usuario.dataNascimento).toLocaleDateString()}</td>
+      <td>
+        {usuario.dataNascimento
+          ? new Date(usuario.dataNascimento).toLocaleDateString()
+          : null}
+      </td>
       <td>{usuario.cidadeNascimento}</td>
       <td>
         <button onClick={() => handleClickUpdate(usuario.id)}>

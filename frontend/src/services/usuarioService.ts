@@ -11,7 +11,25 @@ export const deleteUsuario = async (id: number) => {
   return response;
 };
 
-export const salvarUsuario = async (usuario: Omit<Usuario, "id">) => {
+export const salvarUsuario = async (usuario: UsuarioInsert) => {
   const response = await api.post("/usuarios", usuario);
   return response;
+};
+
+type UsuarioInsert = {
+  nome: string;
+  email: string;
+  empresas: [
+    {
+      id: number;
+      nome: string;
+    },
+    ...{
+      id: number;
+      nome: string;
+    }[]
+  ];
+  telefone?: string | undefined;
+  dataNascimento?: string | undefined;
+  cidadeNascimento?: string | undefined;
 };

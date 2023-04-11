@@ -8,6 +8,7 @@ import {
   ContainerButtonsFrom,
   ContainerReactSelect,
 } from "./styles";
+import InputMask from "react-input-mask";
 import CloseIcon from "@mui/icons-material/Close";
 import SaveIcon from "@mui/icons-material/Save";
 import CleaningServicesIcon from "@mui/icons-material/CleaningServices";
@@ -18,6 +19,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { salvarUsuario } from "../../../services/usuarioService";
 import { getAllEmpresas } from "../../../services/empresaService";
 import Select from "react-select";
+import { Usuario } from "../../../@types";
 
 const style = {
   position: "absolute" as "absolute",
@@ -79,7 +81,7 @@ export const ModalInserir = ({ handleClose, open }: Props) => {
   const onSubmit = handleSubmit((data) => {
     try {
       schema.parse(data);
-      console.log(data);
+      createUser(data);
     } catch (error) {
       console.log(error);
     }
@@ -118,8 +120,9 @@ export const ModalInserir = ({ handleClose, open }: Props) => {
           <ContainerTelefoneData>
             <div>
               <label htmlFor="telefone">Telefone:</label>
-              <input
+              <InputMask
                 {...register("telefone")}
+                mask={"(99) 99999-9999"}
                 type="tel"
                 name="telefone"
                 max={11}

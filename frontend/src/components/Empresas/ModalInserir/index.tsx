@@ -61,10 +61,8 @@ export const ModalInserir = ({ handleClose, open }: Props) => {
   });
 
   const onSubmit = handleSubmit((data) => {
-    console.log("Cheguei");
     try {
       schema.parse(data);
-      console.log(data);
       mutate(data);
     } catch (error) {
       console.log(error);
