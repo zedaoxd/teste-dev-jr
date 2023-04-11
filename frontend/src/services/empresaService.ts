@@ -11,12 +11,21 @@ export const editarEmpresa = async (empresa: Empresa) => {
   return response;
 };
 
-export const getAllEmpresas = async () => {
-  const response = await api.get<Page<Empresa>>("/empresas");
+export const getAllEmpresas = async (
+  texto: string = "",
+  campo: string = ""
+) => {
+  const response = await api.get<Page<Empresa>>("/empresas", {
+    params: { texto, campo },
+  });
   return response.data;
 };
 
 export const deleteEmpresa = async (id: number) => {
   const response = await api.delete(`/empresas/${id}`);
   return response;
+};
+
+type ParamsGetAllEmpresas = {
+  texto?: string;
 };

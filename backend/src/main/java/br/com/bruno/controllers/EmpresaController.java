@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/empresas")
@@ -20,8 +21,10 @@ public class EmpresaController {
     private final EmpresaService empresaService;
 
     @GetMapping
-    public ResponseEntity<Page<EmpresaDTO>> findAll(Pageable pageable) {
-        return ResponseEntity.ok(empresaService.findAll(pageable));
+    public ResponseEntity<Page<EmpresaDTO>> findAll(Pageable pageable,
+                                                    @RequestParam(defaultValue = "") String campo,
+                                                    @RequestParam(defaultValue = "") String texto) {
+        return ResponseEntity.ok(empresaService.findAll(pageable, texto, campo));
     }
 
     @GetMapping("/{id}")

@@ -85,7 +85,7 @@ export const ModalEditar = ({ handleClose, open, empresa }: Props) => {
     >
       <Box sx={style}>
         <Header>
-          <h2>Inserir</h2>
+          <h2>Editar</h2>
           <button onClick={handleClose}>
             <CloseIcon />
           </button>
@@ -114,7 +114,7 @@ export const ModalEditar = ({ handleClose, open, empresa }: Props) => {
             </button>
             <button type="submit">
               <SaveIcon />
-              <span>Salvar</span>
+              <span>Atualizar</span>
             </button>
           </ContainerButtonsFrom>
         </From>
