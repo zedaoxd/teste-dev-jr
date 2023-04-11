@@ -1,12 +1,25 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  width: 100%;
+  padding: 0 20px;
+`;
 
-  h3 {
-    font-size: 1rem;
-    color: red;
-    margin-top: 20px;
+export const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #000;
+  }
+
+  button {
+    background: transparent;
+    border: 0;
   }
 `;
 
@@ -25,27 +38,5 @@ export const Table = styled.table`
   td {
     border-top: 1px solid #ccc;
     padding: 1rem 0 0.5rem 0;
-  }
-
-  td:last-child {
-    text-align: right;
-    width: 110px;
-  }
-
-  button {
-    background: #000;
-    color: #fff;
-    border: 0;
-    border-radius: 0.2em;
-    padding: 0.2em 0.2em 0.1rem 0.2em;
-    font-size: 1em;
-
-    svg {
-      margin: 0;
-    }
-
-    & + button {
-      margin-left: 0.5rem;
-    }
   }
 `;

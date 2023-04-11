@@ -10,10 +10,19 @@ import { Row } from "./Row";
 import { Usuario } from "../../../@types";
 import { useState } from "react";
 import { ModalEditar } from "./ModalEditar";
+import { ModalMostrarEmpresas } from "./ModalMostrarEmpresas";
 
 export const TableUsers = () => {
   const [openModalEditar, setOpenModalEditar] = useState(false);
   const [usuario, setUsuario] = useState<Usuario | null>(null);
+  const [openModalMostrarEmpresas, setOpenModalMostrarEmpresas] =
+    useState(false);
+
+  const handleClickShowEmpresas = (usuario: Usuario) => {
+    setUsuario(usuario);
+    setOpenModalMostrarEmpresas(true);
+  };
+
   const handleClickDelete = (id: number) => {
     Swal.fire({
       title: "Tem certeza que deseja excluir esse usuário?",
@@ -68,6 +77,7 @@ export const TableUsers = () => {
                   usuario={usuario}
                   handleClickDelete={handleClickDelete}
                   handleClickUpdate={handleClickUpdate}
+                  handleClickShowEmpresas={handleClickShowEmpresas}
                 />
               ))}
           </tbody>
@@ -76,6 +86,11 @@ export const TableUsers = () => {
       <ModalEditar
         handleClose={() => setOpenModalEditar(false)}
         open={openModalEditar}
+        usuario={usuario}
+      />
+      <ModalMostrarEmpresas
+        open={openModalMostrarEmpresas}
+        handleClose={() => setOpenModalMostrarEmpresas(false)}
         usuario={usuario}
       />
     </Container>

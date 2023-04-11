@@ -18,7 +18,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   editUsuario,
   getUsuarioById,
-  salvarUsuario,
 } from "../../../../services/usuarioService";
 import { getAllEmpresas } from "../../../../services/empresaService";
 import Select from "react-select";
@@ -126,7 +125,7 @@ export const ModalEditar = ({ handleClose, open, usuario }: Props) => {
     >
       <Box sx={style}>
         <Header>
-          <h2>Inserir</h2>
+          <h2>Editar</h2>
           <button onClick={handleClose}>
             <CloseIcon />
           </button>
@@ -207,7 +206,7 @@ export const ModalEditar = ({ handleClose, open, usuario }: Props) => {
             </button>
             <button type="submit" disabled={!isValid}>
               <SaveIcon />
-              <span>Salvar</span>
+              <span>Atualizar</span>
             </button>
           </ContainerButtonsFrom>
         </From>
