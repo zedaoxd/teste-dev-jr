@@ -1,8 +1,13 @@
 import { Empresa, Page, Usuario } from "../@types";
 import { api } from "./api";
 
-export const getAllUsuarios = async () => {
-  const response = await api.get<Page<Usuario>>("/usuarios");
+export const getAllUsuarios = async (
+  texto: string = "",
+  campo: string = ""
+) => {
+  const response = await api.get<Page<Usuario>>("/usuarios", {
+    params: { texto, campo },
+  });
   return response.data;
 };
 

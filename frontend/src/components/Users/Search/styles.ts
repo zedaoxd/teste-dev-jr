@@ -5,7 +5,7 @@ export const Container = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  & > div {
+  & > form {
     width: 70%;
     display: flex;
     align-items: baseline;

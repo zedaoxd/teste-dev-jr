@@ -50,7 +50,7 @@ export const TableUsers = () => {
     },
   });
 
-  const { data, isLoading } = useQuery(["users"], getAllUsuarios);
+  const { data, isLoading } = useQuery(["users"], () => getAllUsuarios("", ""));
 
   return (
     <Container>
