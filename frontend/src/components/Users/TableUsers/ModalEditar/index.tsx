@@ -16,10 +16,15 @@ import * as z from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { salvarUsuario } from "../../../services/usuarioService";
-import { getAllEmpresas } from "../../../services/empresaService";
+import {
+  editUsuario,
+  getUsuarioById,
+  salvarUsuario,
+} from "../../../../services/usuarioService";
+import { getAllEmpresas } from "../../../../services/empresaService";
 import Select from "react-select";
-import { Empresa } from "../../../@types";
+import { Empresa, Usuario } from "../../../../@types";
+import { useEffect } from "react";
 
 const style = {
   position: "absolute" as "absolute",
@@ -31,11 +36,6 @@ const style = {
   border: "2px solid #000",
   boxShadow: 24,
 };
-
-const empresaSchema = z.object({
-  id: z.number(),
-  nome: z.string(),
-});
 
 const schema = z.object({
   nome: z.string().min(3).max(50),
@@ -52,15 +52,17 @@ type FormValues = z.infer<typeof schema> & {
 type Props = {
   open: boolean;
   handleClose: () => void;
+  usuario: Usuario | null;
 };
 
-export const ModalInserir = ({ handleClose, open }: Props) => {
+export const ModalEditar = ({ handleClose, open, usuario }: Props) => {
   const {
     handleSubmit,
     register,
     formState: { isValid },
     reset,
     control,
+    setValue,
     watch,
   } = useForm<FormValues>({
     mode: "all",
@@ -68,27 +70,48 @@ export const ModalInserir = ({ handleClose, open }: Props) => {
     resolver: zodResolver(schema),
   });
 
+  useEffect(() => {
+    const setUserData = async () => {
+      if (usuario) {
+        const user = await getUsuarioById(usuario.id);
+        setValue("nome", user.nome);
+        setValue("email", user.email);
+        setValue("telefone", user.telefone.replace(/\D/g, ""));
+        setValue(
+          "dataNascimento",
+          user.dataNascimento
+            ? new Date(user.dataNascimento).toISOString().slice(0, 10)
+            : ""
+        );
+        setValue("cidadeNascimento", user.cidadeNascimento);
+        setValue("empresas", user.empresas);
+      }
+    };
+    setUserData();
+  }, [usuario]);
+
   const queryClient = useQueryClient();
 
   const { data } = useQuery(["empresas"], getAllEmpresas);
 
-  const { mutateAsync: createUser } = useMutation(salvarUsuario, {
+  const { mutateAsync: editar } = useMutation(editUsuario, {
     onSuccess: () => {
       reset();
       handleClose();
       queryClient.invalidateQueries(["users"]);
-      Swal.fire("Usuário inserido com sucesso!", "", "success");
+      Swal.fire("Usuário editado com sucesso!", "", "success");
     },
   });
 
   const onSubmit = handleSubmit((data) => {
     try {
       schema.parse(data);
-      if (!watch("empresas")) {
+      if (watch("empresas").length === 0) {
+        Swal.fire("Selecione ao menos uma empresa!", "", "error");
         return;
-      } else {
+      } else if (usuario) {
         data.empresas = watch("empresas");
-        createUser(data);
+        editar({ ...data, id: usuario.id });
       }
     } catch (error) {
       console.log(error);
@@ -128,10 +151,9 @@ export const ModalInserir = ({ handleClose, open }: Props) => {
           <ContainerTelefoneData>
             <div>
               <label htmlFor="telefone">Telefone:</label>
-              <InputMask
+              <input
                 {...register("telefone")}
-                mask={"(99) 99999-9999"}
-                type="tel"
+                type="number"
                 name="telefone"
                 max={11}
                 min={10}
@@ -170,18 +192,12 @@ export const ModalInserir = ({ handleClose, open }: Props) => {
                     {...field}
                     options={data.content}
                     isMulti
-                    isClearable={false}
                     getOptionLabel={(option) => option.nome}
                     getOptionValue={(option) => option.id.toString()}
                     placeholder="Selecione as empresas"
                   />
                 )}
               />
-              <div>
-                {isValid && !watch("empresas") && (
-                  <p>Escolha uma empresa pelo menos</p>
-                )}
-              </div>
             </ContainerReactSelect>
           )}
 

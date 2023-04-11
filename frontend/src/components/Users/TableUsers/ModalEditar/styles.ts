@@ -65,12 +65,6 @@ export const ContainerTelefoneData = styled.div`
 
 export const ContainerReactSelect = styled.div`
   margin-top: 1rem;
-
-  p {
-    margin-top: 0.5rem;
-    font-size: 1rem;
-    color: red;
-  }
 `;
 
 export const ContainerButtonsFrom = styled.div`

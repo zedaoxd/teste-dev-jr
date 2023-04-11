@@ -1,9 +1,19 @@
-import { Page, Usuario } from "../@types";
+import { Empresa, Page, Usuario } from "../@types";
 import { api } from "./api";
 
 export const getAllUsuarios = async () => {
   const response = await api.get<Page<Usuario>>("/usuarios");
   return response.data;
+};
+
+export const getUsuarioById = async (id: number) => {
+  const response = await api.get<Usuario>(`/usuarios/${id}`);
+  return response.data;
+};
+
+export const editUsuario = async (usuario: any) => {
+  const response = await api.put(`/usuarios/${usuario.id}`, usuario);
+  return response;
 };
 
 export const deleteUsuario = async (id: number) => {
@@ -16,20 +26,13 @@ export const salvarUsuario = async (usuario: UsuarioInsert) => {
   return response;
 };
 
-type UsuarioInsert = {
+export type UsuarioInsert = {
   nome: string;
   email: string;
-  empresas: [
-    {
-      id: number;
-      nome: string;
-    },
-    ...{
-      id: number;
-      nome: string;
-    }[]
-  ];
   telefone?: string | undefined;
   dataNascimento?: string | undefined;
   cidadeNascimento?: string | undefined;
+  empresas: Empresa[];
+} & {
+  empresas: Empresa[];
 };

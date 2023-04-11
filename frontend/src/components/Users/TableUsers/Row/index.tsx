@@ -5,7 +5,7 @@ import formataNumeroTelefone from "../../../../utils/formaNumeroTelefone";
 
 type Props = {
   handleClickDelete: (id: number) => void;
-  handleClickUpdate: (id: number) => void;
+  handleClickUpdate: (usuario: Usuario) => void;
   usuario: Usuario;
 };
 
@@ -26,7 +26,7 @@ export const Row = ({
       </td>
       <td>{usuario.cidadeNascimento}</td>
       <td>
-        <button onClick={() => handleClickUpdate(usuario.id)}>
+        <button onClick={() => handleClickUpdate(usuario)}>
           <EditIcon />
         </button>
         <button onClick={() => handleClickDelete(usuario.id)}>

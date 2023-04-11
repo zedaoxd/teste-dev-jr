@@ -7,8 +7,13 @@ import {
 } from "../../../services/usuarioService";
 import { CircularProgress } from "@mui/material";
 import { Row } from "./Row";
+import { Usuario } from "../../../@types";
+import { useState } from "react";
+import { ModalEditar } from "./ModalEditar";
 
 export const TableUsers = () => {
+  const [openModalEditar, setOpenModalEditar] = useState(false);
+  const [usuario, setUsuario] = useState<Usuario | null>(null);
   const handleClickDelete = (id: number) => {
     Swal.fire({
       title: "Tem certeza que deseja excluir esse usuário?",
@@ -21,6 +26,10 @@ export const TableUsers = () => {
         deleteUsuarioMutation(id);
       }
     });
+  };
+  const handleClickUpdate = (usuario: Usuario) => {
+    setUsuario(usuario);
+    setOpenModalEditar(true);
   };
 
   const queryClient = useQueryClient();
@@ -58,12 +67,17 @@ export const TableUsers = () => {
                   key={usuario.id}
                   usuario={usuario}
                   handleClickDelete={handleClickDelete}
-                  handleClickUpdate={() => {}}
+                  handleClickUpdate={handleClickUpdate}
                 />
               ))}
           </tbody>
         </Table>
       )}
+      <ModalEditar
+        handleClose={() => setOpenModalEditar(false)}
+        open={openModalEditar}
+        usuario={usuario}
+      />
     </Container>
   );
 };
