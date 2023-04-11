@@ -4,15 +4,15 @@ export const Container = styled.nav`
   display: flex;
   min-width: 150px;
   width: 10%;
+  height: 40px;
   flex-direction: column;
   align-items: center;
   margin: 0;
   background-color: #fff;
-  gap: 10px;
 
   a {
     text-decoration: none;
-    height: 30px;
+    height: 100%;
     width: 100%;
     color: #000;
     font-size: 1.2rem;
@@ -30,6 +30,11 @@ export const Container = styled.nav`
   }
 
   .active {
-    color: #666;
+    color: #fff;
+    background-color: #456797;
+
+    &:hover {
+      background-color: #456797;
+    }
   }
 `;

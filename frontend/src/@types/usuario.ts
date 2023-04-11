@@ -1,4 +1,4 @@
-import Empresa from "./empresa";
+import { Empresa } from "./empresa";
 
 export type Usuario = {
   id: number;

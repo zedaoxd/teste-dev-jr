@@ -8,7 +8,6 @@ import {
   ContainerButtonsFrom,
   ContainerReactSelect,
 } from "./styles";
-import InputMask from "react-input-mask";
 import CloseIcon from "@mui/icons-material/Close";
 import SaveIcon from "@mui/icons-material/Save";
 import CleaningServicesIcon from "@mui/icons-material/CleaningServices";
