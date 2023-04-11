@@ -63,6 +63,10 @@ export const ContainerTelefoneData = styled.div`
   }
 `;
 
+export const ContainerReactSelect = styled.div`
+  margin-top: 1rem;
+`;
+
 export const ContainerButtonsFrom = styled.div`
   margin-top: 1rem;
   display: flex;

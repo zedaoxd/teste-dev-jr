@@ -1,17 +1,23 @@
 import Box from "@mui/material/Box";
+import Swal from "sweetalert2";
 import Modal from "@mui/material/Modal";
 import {
   From,
   Header,
   ContainerTelefoneData,
   ContainerButtonsFrom,
+  ContainerReactSelect,
 } from "./styles";
 import CloseIcon from "@mui/icons-material/Close";
 import SaveIcon from "@mui/icons-material/Save";
 import CleaningServicesIcon from "@mui/icons-material/CleaningServices";
 import * as z from "zod";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { salvarUsuario } from "../../../services/usuarioService";
+import { getAllEmpresas } from "../../../services/empresaService";
+import Select from "react-select";
 
 const style = {
   position: "absolute" as "absolute",
@@ -24,12 +30,18 @@ const style = {
   boxShadow: 24,
 };
 
+const empresaSchema = z.object({
+  id: z.number(),
+  nome: z.string(),
+});
+
 const schema = z.object({
   nome: z.string().min(3).max(50),
   email: z.string().email(),
   telefone: z.string().optional(),
   dataNascimento: z.string().optional(),
   cidadeNascimento: z.string().optional(),
+  empresas: z.array(empresaSchema).nonempty(),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -43,12 +55,25 @@ export const ModalInserir = ({ handleClose, open }: Props) => {
   const {
     handleSubmit,
     register,
-    formState: { isValid, errors },
+    formState: { isValid },
     reset,
+    control,
   } = useForm<FormValues>({
     mode: "all",
     reValidateMode: "onChange",
     resolver: zodResolver(schema),
+  });
+
+  const queryClient = useQueryClient();
+
+  const { data } = useQuery(["empresas"], getAllEmpresas);
+
+  const { mutateAsync: createUser } = useMutation(salvarUsuario, {
+    onSuccess: () => {
+      handleClose();
+      queryClient.invalidateQueries(["users"]);
+      Swal.fire("Usuário inserido com sucesso!", "", "success");
+    },
   });
 
   const onSubmit = handleSubmit((data) => {
@@ -122,6 +147,24 @@ export const ModalInserir = ({ handleClose, open }: Props) => {
               id="cidadeNascimento"
             />
           </div>
+
+          <ContainerReactSelect>
+            <Controller
+              name="empresas"
+              rules={{ required: true }}
+              control={control}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  options={data?.content}
+                  isMulti
+                  getOptionLabel={(option) => option.nome}
+                  getOptionValue={(option) => option.id.toString()}
+                  placeholder="Selecione as empresas"
+                />
+              )}
+            ></Controller>
+          </ContainerReactSelect>
 
           <ContainerButtonsFrom>
             <button type="reset" onClick={() => reset()}>
