@@ -3,10 +3,12 @@ package br.com.bruno.services;
 import br.com.bruno.dtos.EmpresaDTO;
 import br.com.bruno.entities.Empresa;
 import br.com.bruno.repositories.EmpresaRepository;
+import br.com.bruno.services.exceptions.DatabaseException;
 import br.com.bruno.services.exceptions.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -53,6 +55,10 @@ public class EmpresaService {
         log.info("Deletando empresa com id: {}", id);
         var entity = empresaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Empresa não encontrada: " + id));
-        empresaRepository.delete(entity);
+        try {
+            empresaRepository.delete(entity);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Empresa referenciada por usuarios, delete os usuarios antes");
+        }
     }
 }

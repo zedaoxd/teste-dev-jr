@@ -1,5 +1,6 @@
 package br.com.bruno.controllers.exceptions;
 
+import br.com.bruno.services.exceptions.DatabaseException;
 import br.com.bruno.services.exceptions.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -21,5 +22,16 @@ public class ControllerExceptionHandler {
                 e.getMessage(),
                 request.getRequestURI());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+    }
+
+    @ExceptionHandler(DatabaseException.class)
+    public ResponseEntity<StandardError> database(DatabaseException e, HttpServletRequest request) {
+        StandardError err = new StandardError(
+                Instant.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                "Database exception",
+                e.getMessage(),
+                request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
 }
