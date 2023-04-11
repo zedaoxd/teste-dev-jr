@@ -43,7 +43,7 @@ export const ModalInserir = ({ handleClose, open }: Props) => {
   const {
     handleSubmit,
     register,
-    formState: { isValid, errors },
+    formState: { isValid },
     reset,
   } = useForm<FormValues>({
     mode: "all",
@@ -64,6 +64,9 @@ export const ModalInserir = ({ handleClose, open }: Props) => {
   const onSubmit = handleSubmit((data) => {
     try {
       schema.parse(data);
+      if (data.cnpj.length < 14) {
+        return;
+      }
       mutate(data);
     } catch (error) {
       console.log(error);
@@ -106,7 +109,7 @@ export const ModalInserir = ({ handleClose, open }: Props) => {
               <CleaningServicesIcon />
               <span>Limpar</span>
             </button>
-            <button type="submit">
+            <button type="submit" disabled={!isValid}>
               <SaveIcon />
               <span>Salvar</span>
             </button>

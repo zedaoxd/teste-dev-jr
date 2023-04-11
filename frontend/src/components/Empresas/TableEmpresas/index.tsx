@@ -32,9 +32,7 @@ export const TableEmpresas = () => {
       denyButtonText: `Não`,
     }).then((result) => {
       if (result.isConfirmed) {
-        mutateAsync(id).then((response) => {
-          console.log(response, "teste");
-        });
+        mutateAsync(id);
       }
     });
   };
