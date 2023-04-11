@@ -8,10 +8,7 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import InputMask from "react-input-mask";
-import {
-  editarEmpresa,
-  salvarEmpresa,
-} from "../../../../services/empresaService";
+import { editarEmpresa } from "../../../../services/empresaService";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Empresa } from "../../../../@types";
 import { useEffect } from "react";
