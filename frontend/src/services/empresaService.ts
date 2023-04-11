@@ -15,9 +15,9 @@ export const getAllEmpresas = async (
   texto: string = "",
   campo: string = ""
 ) => {
-  const response = await api.get<Page<Empresa>>("/empresas", {
-    params: { texto, campo },
-  });
+  const response = await api.get<Page<Empresa>>(
+    `/empresas?texto=${texto}&campo=${campo}`
+  );
   return response.data;
 };
 

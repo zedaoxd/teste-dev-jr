@@ -90,7 +90,7 @@ export const ModalEditar = ({ handleClose, open, usuario }: Props) => {
 
   const queryClient = useQueryClient();
 
-  const { data } = useQuery(["empresas"], getAllEmpresas);
+  const { data } = useQuery(["empresas"], () => getAllEmpresas("", ""));
 
   const { mutateAsync: editar } = useMutation(editUsuario, {
     onSuccess: () => {

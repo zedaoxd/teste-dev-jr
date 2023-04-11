@@ -14,7 +14,9 @@ import { Empresa } from "../../../@types";
 export const TableEmpresas = () => {
   const [modalEditarOpen, setModalEditarOpen] = useState(false);
   const [empresa, setEmpresa] = useState<Empresa | null>(null);
-  const { data, isLoading } = useQuery(["empresas"], () => getAllEmpresas());
+  const { data, isLoading } = useQuery(["empresas"], () =>
+    getAllEmpresas("", "")
+  );
 
   const handleclickUpdate = (empresa: Empresa) => {
     setEmpresa(empresa);

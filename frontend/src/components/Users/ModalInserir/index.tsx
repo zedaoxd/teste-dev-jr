@@ -70,7 +70,7 @@ export const ModalInserir = ({ handleClose, open }: Props) => {
 
   const queryClient = useQueryClient();
 
-  const { data } = useQuery(["empresas"], getAllEmpresas);
+  const { data } = useQuery(["empresas"], () => getAllEmpresas("", ""));
 
   const { mutateAsync: createUser } = useMutation(salvarUsuario, {
     onSuccess: () => {

@@ -25,7 +25,6 @@ export const Search = () => {
   });
 
   const onSubmit = handleSubmit((formSeacrh) => {
-    console.log(formSeacrh);
     refetch();
   });
 
