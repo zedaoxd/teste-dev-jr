@@ -8,8 +8,13 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import InputMask from "react-input-mask";
-import { salvarEmpresa } from "../../../../services/empresaService";
+import {
+  editarEmpresa,
+  salvarEmpresa,
+} from "../../../../services/empresaService";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Empresa } from "../../../../@types";
+import { useEffect } from "react";
 
 const style = {
   position: "absolute" as "absolute",
@@ -37,23 +42,25 @@ type FormValues = z.infer<typeof schema>;
 type Props = {
   open: boolean;
   handleClose: () => void;
+  empresa: Empresa | null;
 };
 
-export const ModalInserir = ({ handleClose, open }: Props) => {
-  const {
-    handleSubmit,
-    register,
-    formState: { isValid, errors },
-    reset,
-  } = useForm<FormValues>({
+export const ModalEditar = ({ handleClose, open, empresa }: Props) => {
+  const { handleSubmit, register, reset } = useForm<FormValues>({
     mode: "all",
     reValidateMode: "onChange",
     resolver: zodResolver(schema),
   });
 
+  useEffect(() => {
+    if (empresa) {
+      reset(empresa);
+    }
+  }, [empresa]);
+
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation(salvarEmpresa, {
+  const { mutate } = useMutation(editarEmpresa, {
     onSuccess: () => {
       handleClose();
       queryClient.invalidateQueries(["empresas"]);
@@ -63,7 +70,7 @@ export const ModalInserir = ({ handleClose, open }: Props) => {
   const onSubmit = handleSubmit((data) => {
     try {
       schema.parse(data);
-      mutate(data);
+      mutate({ ...empresa!, ...data });
     } catch (error) {
       console.log(error);
     }

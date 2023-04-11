@@ -55,6 +55,7 @@ export const ModalInserir = ({ handleClose, open }: Props) => {
 
   const { mutate } = useMutation(salvarEmpresa, {
     onSuccess: () => {
+      reset(this);
       handleClose();
       queryClient.invalidateQueries(["empresas"]);
     },

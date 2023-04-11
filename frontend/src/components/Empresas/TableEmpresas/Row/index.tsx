@@ -5,7 +5,7 @@ import { Empresa } from "../../../../@types";
 
 type Props = {
   handleClickDelete: (id: number) => void;
-  handleClickUpdate: (id: number) => void;
+  handleClickUpdate: (empresa: Empresa) => void;
   empresa: Empresa;
 };
 
@@ -19,7 +19,7 @@ export const Row = ({
       <td>{empresa.nome}</td>
       <td>{formatCNPJ(empresa.cnpj)}</td>
       <td>
-        <button onClick={() => handleClickUpdate(empresa.id)}>
+        <button onClick={() => handleClickUpdate(empresa)}>
           <EditIcon />
         </button>
         <button onClick={() => handleClickDelete(empresa.id)}>

@@ -7,9 +7,19 @@ import { Container, Table } from "./styles";
 import { CircularProgress } from "@mui/material";
 import { Row } from "./Row";
 import Swal from "sweetalert2";
+import { ModalEditar } from "./ModalEditar";
+import { useState } from "react";
+import { Empresa } from "../../../@types";
 
 export const TableEmpresas = () => {
+  const [modalEditarOpen, setModalEditarOpen] = useState(false);
+  const [empresa, setEmpresa] = useState<Empresa | null>(null);
   const { data, isLoading } = useQuery(["empresas"], getAllEmpresas);
+
+  const handleclickUpdate = (empresa: Empresa) => {
+    setEmpresa(empresa);
+    setModalEditarOpen(true);
+  };
 
   const handleClickDelete = (id: number) => {
     Swal.fire({
@@ -66,12 +76,17 @@ export const TableEmpresas = () => {
                   key={empresa.id}
                   empresa={empresa}
                   handleClickDelete={handleClickDelete}
-                  handleClickUpdate={() => {}}
+                  handleClickUpdate={handleclickUpdate}
                 />
               ))}
           </tbody>
         </Table>
       )}
+      <ModalEditar
+        open={modalEditarOpen}
+        handleClose={() => setModalEditarOpen(false)}
+        empresa={empresa}
+      />
     </Container>
   );
 };

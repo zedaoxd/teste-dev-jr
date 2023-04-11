@@ -1,1 +1,14 @@
-
+spring:
+  datasource:
+    url: ${POSTGRES_DB:jdbc:postgresql://localhost:5432/testdevjr}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:12345678}
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            '[non_contextual_creation]': true
+    generate-ddl: true
