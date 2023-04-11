@@ -1,4 +1,3 @@
-import { Navbar } from "../../Navbar";
 import { Search } from "../Search";
 import { TableUsers } from "../TableUsers";
 import { Container } from "./styles";

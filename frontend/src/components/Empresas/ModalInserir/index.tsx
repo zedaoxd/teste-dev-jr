@@ -8,6 +8,8 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import InputMask from "react-input-mask";
+import { salvarEmpresa } from "../../../services/empresaService";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const style = {
   position: "absolute" as "absolute",
@@ -20,10 +22,15 @@ const style = {
   boxShadow: 24,
 };
 
-const schema = z.object({
-  nome: z.string().min(3).max(50),
-  cnpj: z.string(),
-});
+const schema = z
+  .object({
+    nome: z.string().min(3).max(50),
+    cnpj: z.string(),
+  })
+  .transform((filds) => ({
+    nome: filds.nome.trim(),
+    cnpj: filds.cnpj.replace(/\D/g, ""),
+  }));
 
 type FormValues = z.infer<typeof schema>;
 
@@ -44,11 +51,21 @@ export const ModalInserir = ({ handleClose, open }: Props) => {
     resolver: zodResolver(schema),
   });
 
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation(salvarEmpresa, {
+    onSuccess: () => {
+      handleClose();
+      queryClient.invalidateQueries(["empresas"]);
+    },
+  });
+
   const onSubmit = handleSubmit((data) => {
     console.log("Cheguei");
     try {
       schema.parse(data);
       console.log(data);
+      mutate(data);
     } catch (error) {
       console.log(error);
     }
