@@ -20,8 +20,10 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @GetMapping
-    public ResponseEntity<Page<UsuarioDTO>> findAll(Pageable pageable) {
-        return ResponseEntity.ok(usuarioService.findAll(pageable));
+    public ResponseEntity<Page<UsuarioDTO>> findAll(Pageable pageable
+            , @RequestParam(defaultValue = "") String texto
+            , @RequestParam(defaultValue = "") String campo) {
+        return ResponseEntity.ok(usuarioService.findAll(pageable, texto, campo));
     }
 
     @GetMapping("/{id}")

@@ -27,14 +27,11 @@ public class EmpresaService {
     @Transactional(readOnly = true)
     public Page<EmpresaDTO> findAll(Pageable pageable, String texto, String campo) {
 
-        switch (campo) {
-            case "nome":
-                return empresaRepository.findByNomeContainingIgnoreCase(texto, pageable).map(Empresa::toDTO);
-            case "cnpj":
-                return empresaRepository.findByCnpjContainingIgnoreCase(texto, pageable).map(Empresa::toDTO);
-            default:
-                return empresaRepository.findAll(pageable).map(Empresa::toDTO);
-        }
+        return switch (campo) {
+            case "nome" -> empresaRepository.findByNomeContainingIgnoreCase(texto, pageable).map(Empresa::toDTO);
+            case "cnpj" -> empresaRepository.findByCnpjContainingIgnoreCase(texto, pageable).map(Empresa::toDTO);
+            default -> empresaRepository.findAll(pageable).map(Empresa::toDTO);
+        };
     }
 
     @Transactional(readOnly = true)

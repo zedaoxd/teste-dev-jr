@@ -20,9 +20,15 @@ public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
 
     @Transactional(readOnly = true)
-    public Page<UsuarioDTO> findAll(Pageable pageable) {
-        log.info("Buscando todos os usuarios");
-        return usuarioRepository.findAll(pageable).map(Usuario::toDTO);
+    public Page<UsuarioDTO> findAll(Pageable pageable, String texto, String campo) {
+        return switch (campo) {
+            case "nome" -> usuarioRepository.findByNomeContainingIgnoreCase(texto, pageable).map(Usuario::toDTO);
+            case "email" -> usuarioRepository.findByEmailContainingIgnoreCase(texto, pageable).map(Usuario::toDTO);
+            case "telefone" ->
+                    usuarioRepository.findByTelefoneContainingIgnoreCase(texto, pageable).map(Usuario::toDTO);
+            case "cidade" -> usuarioRepository.findByCidadeNascimentoContainingIgnoreCase(texto, pageable).map(Usuario::toDTO);
+            default -> usuarioRepository.findAll(pageable).map(Usuario::toDTO);
+        };
     }
 
     @Transactional(readOnly = true)

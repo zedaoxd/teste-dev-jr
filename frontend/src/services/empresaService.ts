@@ -25,7 +25,3 @@ export const deleteEmpresa = async (id: number) => {
   const response = await api.delete(`/empresas/${id}`);
   return response;
 };
-
-type ParamsGetAllEmpresas = {
-  texto?: string;
-};
