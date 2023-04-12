@@ -1,5 +1,4 @@
 import Box from "@mui/material/Box";
-import Swal from "sweetalert2";
 import Modal from "@mui/material/Modal";
 import {
   From,
@@ -12,42 +11,9 @@ import InputMask from "react-input-mask";
 import CloseIcon from "@mui/icons-material/Close";
 import SaveIcon from "@mui/icons-material/Save";
 import CleaningServicesIcon from "@mui/icons-material/CleaningServices";
-import * as z from "zod";
-import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { salvarUsuario } from "../../../services/usuarioService";
-import { getAllEmpresas } from "../../../services/empresaService";
+import { Controller } from "react-hook-form";
 import Select from "react-select";
-import { Empresa } from "../../../@types";
-
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-};
-
-const empresaSchema = z.object({
-  id: z.number(),
-  nome: z.string(),
-});
-
-const schema = z.object({
-  nome: z.string().min(3).max(50),
-  email: z.string().email(),
-  telefone: z.string().optional(),
-  dataNascimento: z.string().optional(),
-  cidadeNascimento: z.string().optional(),
-});
-
-type FormValues = z.infer<typeof schema> & {
-  empresas: Empresa[];
-};
+import { useModalInserirUsuario } from "../../../hooks/useModalInserirUsuario";
 
 type Props = {
   open: boolean;
@@ -55,45 +21,8 @@ type Props = {
 };
 
 export const ModalInserir = ({ handleClose, open }: Props) => {
-  const {
-    handleSubmit,
-    register,
-    formState: { isValid },
-    reset,
-    control,
-    watch,
-  } = useForm<FormValues>({
-    mode: "all",
-    reValidateMode: "onChange",
-    resolver: zodResolver(schema),
-  });
-
-  const queryClient = useQueryClient();
-
-  const { data } = useQuery(["empresas"], () => getAllEmpresas("", ""));
-
-  const { mutateAsync: createUser } = useMutation(salvarUsuario, {
-    onSuccess: () => {
-      reset();
-      handleClose();
-      queryClient.invalidateQueries(["users"]);
-      Swal.fire("Usuário inserido com sucesso!", "", "success");
-    },
-  });
-
-  const onSubmit = handleSubmit((data) => {
-    try {
-      schema.parse(data);
-      if (!watch("empresas")) {
-        return;
-      } else {
-        data.empresas = watch("empresas");
-        createUser(data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  });
+  const { control, data, isValid, onSubmit, register, style, watch, reset } =
+    useModalInserirUsuario(handleClose);
 
   return (
     <Modal
