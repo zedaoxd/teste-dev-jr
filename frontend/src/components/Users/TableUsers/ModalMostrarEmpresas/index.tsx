@@ -2,21 +2,8 @@ import { Box, Modal } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { Container, Header, Table } from "./styles";
 import { Usuario } from "../../../../@types";
-import { useEffect, useState } from "react";
-import { getUsuarioById } from "../../../../services/usuarioService";
-import { useQuery } from "@tanstack/react-query";
 import { Row } from "./Row";
-
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-};
+import { useModalMostrarEmpresa } from "../../../../hooks/useModalMostrarEmpresa";
 
 type Props = {
   open: boolean;
@@ -25,18 +12,7 @@ type Props = {
 };
 
 export const ModalMostrarEmpresas = ({ open, handleClose, usuario }: Props) => {
-  const [usuarioState, setUsuarioState] = useState<Usuario | null>(null);
-
-  useEffect(() => {
-    const getUser = async () => {
-      if (usuario) {
-        getUsuarioById(usuario.id).then((response) => {
-          setUsuarioState(response);
-        });
-      }
-    };
-    getUser();
-  }, [usuario]);
+  const { style, usuarioFetch } = useModalMostrarEmpresa(usuario);
 
   return (
     <Modal
@@ -63,7 +39,7 @@ export const ModalMostrarEmpresas = ({ open, handleClose, usuario }: Props) => {
               </tr>
             </thead>
             <tbody>
-              {usuarioState?.empresas.map((u) => (
+              {usuarioFetch?.empresas.map((u) => (
                 <Row key={u.id} cnpj={u.cnpj} nome={u.nome} />
               ))}
             </tbody>
