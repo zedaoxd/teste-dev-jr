@@ -50,7 +50,7 @@ export const ModalMostrarEmpresas = ({ open, handleClose, usuario }: Props) => {
           <Header>
             <h1>Empresas</h1>
 
-            <button onClick={handleClose}>
+            <button onClick={handleClose} data-testid="close-modal">
               <CloseIcon />
             </button>
           </Header>

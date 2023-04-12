@@ -126,14 +126,20 @@ export const ModalEditar = ({ handleClose, open, usuario }: Props) => {
       <Box sx={style}>
         <Header>
           <h2>Editar</h2>
-          <button onClick={handleClose}>
+          <button onClick={handleClose} data-testid="close-modal">
             <CloseIcon />
           </button>
         </Header>
         <From onSubmit={onSubmit}>
           <div>
             <label htmlFor="nome">Nome: *</label>
-            <input {...register("nome")} type="text" name="nome" id="nome" />
+            <input
+              {...register("nome")}
+              type="text"
+              name="nome"
+              id="nome"
+              data-testid="input-nome"
+            />
           </div>
 
           <div>
@@ -143,6 +149,7 @@ export const ModalEditar = ({ handleClose, open, usuario }: Props) => {
               type="email"
               name="email"
               id="email"
+              data-testid="input-email"
             />
           </div>
 
@@ -153,8 +160,6 @@ export const ModalEditar = ({ handleClose, open, usuario }: Props) => {
                 {...register("telefone")}
                 type="number"
                 name="telefone"
-                max={11}
-                min={10}
                 id="telefone"
               />
             </div>
@@ -200,7 +205,11 @@ export const ModalEditar = ({ handleClose, open, usuario }: Props) => {
           )}
 
           <ContainerButtonsFrom>
-            <button type="reset" onClick={() => reset()}>
+            <button
+              type="reset"
+              onClick={() => reset()}
+              data-testid="submit-form"
+            >
               <CleaningServicesIcon />
               <span>Limpar</span>
             </button>

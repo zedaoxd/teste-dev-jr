@@ -133,8 +133,6 @@ export const ModalInserir = ({ handleClose, open }: Props) => {
                 mask={"(99) 99999-9999"}
                 type="tel"
                 name="telefone"
-                max={11}
-                min={10}
                 id="telefone"
               />
             </div>

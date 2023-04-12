@@ -8,6 +8,8 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=testdevjr
+      - POSTGRES_URL=jdbc:postgresql://db:5432/testdevjr
+      - SPRING_PROFILES_ACTIVE=prod
     depends_on:
       - db
   frontend:

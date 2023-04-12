@@ -4,7 +4,6 @@ export const Container = styled.nav`
   display: flex;
   min-width: 150px;
   width: 10%;
-  height: 40px;
   flex-direction: column;
   align-items: center;
   margin: 0;
@@ -12,7 +11,7 @@ export const Container = styled.nav`
 
   a {
     text-decoration: none;
-    height: 100%;
+    height: 40px;
     width: 100%;
     color: #000;
     font-size: 1.2rem;

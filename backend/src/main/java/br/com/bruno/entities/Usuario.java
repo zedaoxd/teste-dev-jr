@@ -34,8 +34,7 @@ public class Usuario implements Serializable {
     @Column(length = 20)
     private String telefone;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "data_nascimento")
+    @Column(name = "data_nascimento", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Date dataNascimento;
 
     @Column(length = 100)

@@ -3,7 +3,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Usuario } from "../../../../@types";
 import formataNumeroTelefone from "../../../../utils/formaNumeroTelefone";
-import { useState } from "react";
 
 type Props = {
   handleClickDelete: (id: number) => void;
@@ -20,9 +19,11 @@ export const Row = ({
 }: Props) => {
   return (
     <tr>
-      <td>{usuario.nome}</td>
-      <td>{usuario.email}</td>
-      <td>{formataNumeroTelefone(usuario.telefone)}</td>
+      <td data-testid="c-nome">{usuario.nome}</td>
+      <td data-testid="c-email">{usuario.email}</td>
+      <td data-testid="c-telefone">
+        {formataNumeroTelefone(usuario.telefone)}
+      </td>
       <td>
         {usuario.dataNascimento
           ? new Date(usuario.dataNascimento).toLocaleDateString()

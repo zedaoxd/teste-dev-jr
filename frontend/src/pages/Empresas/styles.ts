@@ -10,5 +10,46 @@ export const Container = styled.div`
   > div {
     display: flex;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    position: relative;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        45deg,
+        #ffff00,
+        #00ff00,
+        #0099ff,
+        #001aff,
+        #a200ff,
+        #ff0055,
+        #ff0000,
+        #ffff00,
+        #00ff00,
+        #0099ff,
+        #001aff,
+        #a200ff
+      );
+      background-size: 300%;
+      animation: animateBorder 15s linear alternate infinite;
+      border-radius: 8px;
+    }
+
+    &::after {
+      filter: blur(50px);
+    }
+
+    @keyframes animateBorder {
+      0% {
+        background-position: 0;
+      }
+      100% {
+        background-position: 300%;
+      }
+    }
   }
 `;
