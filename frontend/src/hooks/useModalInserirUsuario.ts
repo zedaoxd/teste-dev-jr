@@ -34,7 +34,7 @@ export const useModalInserirUsuario = (handleClose: () => void) => {
   const {
     handleSubmit,
     register,
-    formState: { isValid },
+    formState: { isValid, errors },
     reset,
     control,
     watch,
@@ -80,5 +80,6 @@ export const useModalInserirUsuario = (handleClose: () => void) => {
     data,
     watch,
     reset,
+    errors,
   };
 };

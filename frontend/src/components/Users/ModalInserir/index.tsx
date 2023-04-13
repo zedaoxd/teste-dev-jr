@@ -6,6 +6,7 @@ import {
   ContainerTelefoneData,
   ContainerButtonsFrom,
   ContainerReactSelect,
+  ErrorParagraph,
 } from "./styles";
 import InputMask from "react-input-mask";
 import CloseIcon from "@mui/icons-material/Close";
@@ -21,8 +22,17 @@ type Props = {
 };
 
 export const ModalInserir = ({ handleClose, open }: Props) => {
-  const { control, data, isValid, onSubmit, register, style, watch, reset } =
-    useModalInserirUsuario(handleClose);
+  const {
+    control,
+    data,
+    isValid,
+    errors,
+    onSubmit,
+    register,
+    style,
+    watch,
+    reset,
+  } = useModalInserirUsuario(handleClose);
 
   return (
     <Modal
@@ -52,6 +62,7 @@ export const ModalInserir = ({ handleClose, open }: Props) => {
               name="email"
               id="email"
             />
+            {errors?.email && <ErrorParagraph>E-mail invalido</ErrorParagraph>}
           </div>
 
           <ContainerTelefoneData>

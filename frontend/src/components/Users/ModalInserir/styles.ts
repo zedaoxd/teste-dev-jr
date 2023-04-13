@@ -103,3 +103,8 @@ export const ContainerButtonsFrom = styled.div`
     }
   }
 `;
+
+export const ErrorParagraph = styled.p`
+  color: red;
+  margin-top: 0.3rem;
+`;
