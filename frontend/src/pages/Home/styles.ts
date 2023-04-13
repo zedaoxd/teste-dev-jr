@@ -19,23 +19,9 @@ export const Container = styled.div`
       z-index: -1;
       width: 100%;
       height: 100%;
-      background: linear-gradient(
-        45deg,
-        #ffff00,
-        #00ff00,
-        #0099ff,
-        #001aff,
-        #a200ff,
-        #ff0055,
-        #ff0000,
-        #ffff00,
-        #00ff00,
-        #0099ff,
-        #001aff,
-        #a200ff
-      );
+      background: linear-gradient(45deg, #000, #ccc, #000, #ccc);
       background-size: 300%;
-      animation: animateBorder 15s linear alternate infinite;
+      animation: animateBorder 10s linear alternate infinite;
       border-radius: 8px;
     }
 
